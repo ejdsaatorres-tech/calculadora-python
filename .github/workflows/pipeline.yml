@@ -1,0 +1,73 @@
+name: CI/CD Pipeline - Calculadora
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Obtener el código
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Preparar Python
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+
+      # 3. Instalar dependencias
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          # Instalamos flake8 para el linter y pytest para los tests
+          pip install flake8 pytest
+
+      # --- PARTE DE TU COMPAÑERO (Q1/Q2) ---
+      - name: Run Unit & Integration Tests (Q1/Q2)
+        run: |
+          pytest
+        # Si esto falla, el pipeline se detiene aquí.
+
+      # --- TU PARTE (Q4 - Análisis Estático y Seguridad) ---
+      
+      # Linter (Calidad de código básica)
+      - name: Lint with flake8 (Q4 - Code Quality)
+        run: |
+          # stop the build if there are Python syntax errors or undefined names
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          # exit-zero treats all errors as warnings.
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+      # Snyk (Seguridad)
+      - name: Run Snyk to check for vulnerabilities (Q4 - Security)
+        uses: snyk/actions/python@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: monitor # 'monitor' reporta, 'test' falla si hay error crítico.
+          
+  delivery:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' # Solo despliega si estamos en la rama main
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # --- TU PARTE (CD - Simulación de Despliegue con Docker) ---
+      - name: Build Docker Image
+        run: |
+          docker build -t mi-calculadora-app .
+          
+      - name: Simulate Deploy
+        run: |
+          echo "La imagen Docker se ha construido correctamente."
+          echo "Desplegando simuladamente a entorno de Producción..."
+          # Aquí podrías subir la imagen a DockerHub si quisieras ir más allá,
+          # pero el PDF dice que con Docker vale.
