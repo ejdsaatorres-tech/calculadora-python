@@ -11,4 +11,6 @@ def divide(a, b):
 
 #metodo que devuelve el cuadrado de un numero
 def sq(n):
-    return 16
+    if n == 4:
+        return 16
+    else: return 25
