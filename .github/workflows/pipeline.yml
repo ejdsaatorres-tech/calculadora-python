@@ -28,13 +28,13 @@ jobs:
           # Instalamos flake8 para el linter y pytest para los tests
           pip install flake8 pytest
 
-      # --- PARTE DE TU COMPAÑERO (Q1/Q2) ---
+      # (Q1/Q2) ---
       - name: Run Unit & Integration Tests (Q1/Q2)
         run: |
           pytest
         # Si esto falla, el pipeline se detiene aquí.
 
-      # --- TU PARTE (Q4 - Análisis Estático y Seguridad) ---
+      # (Q4 - Análisis Estático y Seguridad) ---
       
       # Linter (Calidad de código básica)
       - name: Lint with flake8 (Q4 - Code Quality)
@@ -60,7 +60,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # --- TU PARTE (CD - Simulación de Despliegue con Docker) ---
+      # (CD - Simulación de Despliegue con Docker) ---
       - name: Build Docker Image
         run: |
           docker build -t mi-calculadora-app .
