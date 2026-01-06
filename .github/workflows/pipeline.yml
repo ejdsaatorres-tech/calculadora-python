@@ -69,5 +69,4 @@ jobs:
         run: |
           echo "La imagen Docker se ha construido correctamente."
           echo "Desplegando simuladamente a entorno de Producción..."
-          # Aquí podrías subir la imagen a DockerHub si quisieras ir más allá,
-          # pero el PDF dice que con Docker vale.
+
