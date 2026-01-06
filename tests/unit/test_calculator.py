@@ -19,4 +19,4 @@ def test_divide_by_zero():
 
 #prueba que falla deliberadamente. 4 elevado a 4. (4**4)
 def test_sq_4():
-    assert sq(4) == 15
+    assert sq(4) == 16
