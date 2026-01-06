@@ -50,7 +50,7 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          command: monitor # 'monitor' reporta, 'test' falla si hay error crítico.
+          command: test # 'monitor' reporta, 'test' falla si hay error crítico.
           
   delivery:
     needs: build-and-test
